@@ -1,4 +1,5 @@
 import random
+import numpy as np
 from typing import Literal, Tuple
 
 # Función de fitness
@@ -96,7 +97,7 @@ def algoritmo_evolutivo(
         mejor_fitness = fitness(mejor_individuo)
         error = abs(mejor_individuo - solucion)
         # Mostrar resultados de la generación
-        print(f"Generación {generacion+1}: Mejor Individuo = {mejor_individuo:.4f}, Fitness = {mejor_fitness:.4f}, Error = {error:.4f}")
+        print(f"Generación {generacion+1}: Mejor Individuo = {mejor_individuo:.7f}, Fitness = {mejor_fitness:.7f}, Error = {error:.7f}")
         # Condición de parada
         if error < epsilon:
             break
@@ -110,11 +111,11 @@ def algoritmo_evolutivo(
 if __name__ == "__main__":
     mejor_ind, mejor_fit, generacion = algoritmo_evolutivo(
         tam_poblacion=10,
-        num_generaciones=1000,
+        num_generaciones=1000000,
         rango=(-10, 10),
-        metodo_cruce='aritmetico',
+        metodo_cruce='dos_puntos',
         metodo_mutacion='gaussiana',
         epsilon=0.001,
         solucion=3
     )
-    print(f"\nMejor individuo encontrado: x = {mejor_ind:.4f}, Fitness = {mejor_fit:.4f}, Generación = {generacion+1}")
+    print(f"\nMejor individuo encontrado: x = {mejor_ind:.7f}, Fitness = {mejor_fit:.7f}, Generación = {generacion+1}")
