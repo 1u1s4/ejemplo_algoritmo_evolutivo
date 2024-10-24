@@ -1,5 +1,5 @@
 import random
-import math
+from typing import Literal, Tuple
 
 # Función de fitness
 def fitness(x):
@@ -47,14 +47,16 @@ def mutacion_polinomial(individuo, eta=20):
 
 # Algoritmo Evolutivo
 def algoritmo_evolutivo(
-    tam_poblacion=10,
-    num_generaciones=20,
-    metodo_cruce='aritmetico',
-    metodo_mutacion='gaussiana',
-    epsilon=1e-6
+    tam_poblacion: int=10,
+    num_generaciones: int=20,
+    rango: Tuple=(-10, 10),
+    metodo_cruce: Literal['aritmetico', 'un_punto', 'dos_puntos', 'uniforme']='aritmetico',
+    metodo_mutacion: Literal['gaussiana', 'uniforme', 'polinomial']='gaussiana',
+    epsilon: float=0.001,
+    solucion: float=0
 ):
     # Generar población inicial
-    poblacion = [random.uniform(-10, 10) for _ in range(tam_poblacion)]
+    poblacion = [random.uniform(rango[0], rango[1]) for _ in range(tam_poblacion)]
 
     for generacion in range(num_generaciones):
         # Evaluar fitness
@@ -92,7 +94,7 @@ def algoritmo_evolutivo(
         # Mejor individuo y error
         mejor_individuo = padres[0]
         mejor_fitness = fitness(mejor_individuo)
-        error = abs(mejor_individuo - 3)
+        error = abs(mejor_individuo - solucion)
         # Mostrar resultados de la generación
         print(f"Generación {generacion+1}: Mejor Individuo = {mejor_individuo:.4f}, Fitness = {mejor_fitness:.4f}, Error = {error:.4f}")
         # Condición de parada
@@ -109,8 +111,10 @@ if __name__ == "__main__":
     mejor_ind, mejor_fit, generacion = algoritmo_evolutivo(
         tam_poblacion=10,
         num_generaciones=1000,
-        metodo_cruce='aritmetico',   # Opciones: 'aritmetico', 'un_punto', 'dos_puntos', 'uniforme'
-        metodo_mutacion='gaussiana',  # Opciones: 'gaussiana', 'uniforme', 'polinomial'
-        epsilon=0.001
+        rango=(-10, 10),
+        metodo_cruce='aritmetico',
+        metodo_mutacion='gaussiana',
+        epsilon=0.001,
+        solucion=3
     )
     print(f"\nMejor individuo encontrado: x = {mejor_ind:.4f}, Fitness = {mejor_fit:.4f}, Generación = {generacion+1}")
